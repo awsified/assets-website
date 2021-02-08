@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+
+      <h1 class="pt-5 pb-2">Widgets Inc.</h1>
+
+      <p class="lead">Index of all Widget Inc. Assets</p>
+
+      <p>For more details click asset:</p>
+
+      <ul display: inline>
+          {% for s in machines %}
+          <li display: inline><a href="{{ url_for( 'full', machine=s.machine ) }}">{{ s.machine }}</a></li>
+          {% endfor %}
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
