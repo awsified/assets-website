@@ -1,42 +1,55 @@
 {% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
 
 {% block styles %}
 {{ super() }}
 	<style>
 		body { background: #e8f1f9; }
-		ul { display: flex; }
 	</style>
 {% endblock %}
 
 
 {% block title %}
-Select an Asset
+Search Assets
 {% endblock %}
 
 
 {% block content %}
-<table class="table">
-    <tr>
-        <th></th>
-        <th>Machine</th>
-        <th>Employee</th>
-        <th>IIA Tag</th>
-        <th>Serial</th>
-        <th>MAC</th>
-        <th>Location</th>
-    </tr>
 
-    <!-- here is a for-loop to give us all the socks -->
-    {% for asset in assets %}
-    <tr>
-        <td class="center-align"><input type="radio" name="id" value="{{ asset.machine }}" required></td>
-        <td>{{ asset.machine }}</td>
-        <td>{{ asset.employee }}</td>
-        <td>{{ asset.tag }}</td>
-        <td>{{ asset.serial }}</td>
-        <td>{{ asset.mac }}</td>
-        <td>{{ asset.location }}</td>
-    </tr>
-    {% endfor %}
-</table>
+<div class="container">
+	<div class="row pb-5">
+		<div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+
+		<h1 class="pt-5 pb-2">Search Assets</h1>
+
+
+			<p class="lead alert alert-primary">Search for a new asset.</p>
+
+			<p class="ml-4"><a href="{{ url_for('index') }}">Return to the asset index.</a></p>
+
+			<!-- show flash - based on WTForms validators
+				 see https://pythonprogramming.net/flash-flask-tutorial/
+				 get_flashed_messages() exists here because of flash()
+				 in the route function
+				 -->
+			{% with errors = get_flashed_messages() %}
+				{% if errors %}
+					{% for err in errors %}
+						<div class="alert alert-danger alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+						{{ err }}
+						</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+			<!-- end of flash -->
+
+			<!-- the form, thanks to WTForms -->
+		    {{ wtf.quick_form(form3) }}
+
+		</div>
+	</div>
+</div>
+
 {% endblock %}
