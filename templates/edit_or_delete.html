@@ -36,7 +36,7 @@
 	  <!-- but only one will be visible, depending on how the template
   		   was opened -->
 
-	  <!-- ----- start delete sock content ----- -->
+	  <!-- ----- start delete asset content ----- -->
 
 	  {% if choice == 'delete' %}
 
@@ -112,11 +112,11 @@
 
 		<!-- start form for editing record
 			 correct use of WTF Bootstrap styles -->
-		<form method="post" action="{{ url_for('edit_result') }}" machine="update">
+		<form method="post" action="{{ url_for('edit_result') }}" id="update">
 			{{ form1.csrf_token }}
 			{{ form1.id_field(value=asset.machine) }}
 			{{ wtf.form_field(form1.machine, value=asset.machine) }}
-			{{ wtf.form_field(form1.employee) }}
+			{{ wtf.form_field(form1.employee, value=asset.employee) }}
 			{{ wtf.form_field(form1.tag, value=asset.tag) }}
 			{{ wtf.form_field(form1.serial, value=asset.serial) }}
             {{ wtf.form_field(form1.mac, value=asset.mac) }}

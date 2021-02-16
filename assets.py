@@ -41,10 +41,8 @@ class Asset(db.Model):
 class AddRecord(FlaskForm):
     # id used only by update/edit
     id_field = HiddenField()
-    machine = StringField('Enter machine name', [ InputRequired(), Regexp(r'^[A-Za-z0-9\s\-\']+$', message="Invalid machine name"),
-        Length(min=12, max=12, message="Invalid machine length")
-        ])
-    employee = StringField('Enter employee name', [ InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message="Invalid employee name")])
+    machine = StringField('Enter machine name', [ InputRequired(), Regexp(r'^[A-Za-z0-9\s\-\']+$', message="Invalid machine name")])
+    employee = StringField('Enter employee name', [ InputRequired(), Regexp(r'^[A-Z][A-Za-z0\s\-\']+$', message="Invalid employee name (Make sure the first letter is capitalized)")])
     tag = StringField('IIA tag')
     serial = StringField('HP serial tag')
     mac = StringField('MAC Address')
@@ -69,7 +67,7 @@ def index():
 def inventory(machine):
     try:
         machines = Asset.query.filter_by(machine=machine).order_by(Asset.serial).all()
-        return render_template('list.html', machines=machines, machine=machine)
+        return render_template('list_asset.html', machines=machines, machine=machine)
     except Exception as e:
         # e holds description of the error
         error_text = "<p>The error:<br>" + str(e) + "</p>"
@@ -87,7 +85,7 @@ def add_record():
         serial = request.form['serial']
         mac = request.form['mac']
         location = request.form['location']
-        # the data to be inserted into Sock model - the table, socks
+        # the data to be inserted into Asset model - the table, assets
         record = Asset(machine, employee, tag, serial, mac, location)
         # Flask-SQLAlchemy magic adds record to database
         db.session.add(record)
@@ -107,17 +105,25 @@ def add_record():
         return render_template('add_record.html', form1=form1)
 
 # select a record to edit or delete
-@app.route('/select_record/')
-def select_record():
-    assets = Asset.query.filter(Asset.machine).order_by(Asset.machine).all()
+# @app.route('/select_record/')
+# def select_record():
+#     assets = Asset.query.filter(Asset.machine).order_by(Asset.machine).all()
+#     return render_template('select_record.html', assets=assets)
+
+@app.route('/select_record/<letters>')
+def select_record(letters):
+    # alphabetical lists by sock name, chunked by letters between _ and _
+    # .between() evaluates first letter of a string
+    a, b = list(letters)
+    assets = Asset.query.filter(Asset.employee.between(a, b)).order_by(Asset.employee).all()
     return render_template('select_record.html', assets=assets)
 
 # edit or delete - come here from form in /select_record
 @app.route('/edit_or_delete', methods=['POST'])
 def edit_or_delete():
-    machine = request.form['machine']
+    id = request.form['id']
     choice = request.form['choice']
-    asset = Asset.query.filter(Asset.machine == machine).first()
+    asset = Asset.query.filter(Asset.machine == id).first()
     # two forms in this template
     form1 = AddRecord()
     form2 = DeleteForm()
@@ -126,9 +132,9 @@ def edit_or_delete():
 # result of delete - this function deletes the record
 @app.route('/delete_result', methods=['POST'])
 def delete_result():
-    machine = request.form['id_field']
+    id = request.form['id_field']
     purpose = request.form['purpose']
-    asset = Asset.query.filter(Asset.machine == machine).first()
+    asset = Asset.query.filter(Asset.machine == id).first()
     if purpose == 'delete':
         db.session.delete(asset)
         db.session.commit()
@@ -149,6 +155,7 @@ def edit_result():
     asset.employee = request.form['employee']
     asset.tag = request.form['tag']
     asset.serial = request.form['serial']
+    asset.mac = request.form['mac']
     asset.location = request.form['location']
 
     form1 = AddRecord()
