@@ -104,11 +104,12 @@ def add_record():
                 ), 'error')
         return render_template('add_record.html', form1=form1)
 
-# select a record to edit or delete
-# @app.route('/select_record/')
-# def select_record():
-#     assets = Asset.query.filter(Asset.machine).order_by(Asset.machine).all()
-#     return render_template('select_record.html', assets=assets)
+
+@app.route('/search_assets/')
+def search_assets():
+    # User.query.filter(User.name.like("%John Smith%")).all()
+    assets = Asset.query.filter(Asset.machine.contains('ECCICFM4701')).all()
+    return render_template('search_assets.html', assets=assets)
 
 @app.route('/select_record/<letters>')
 def select_record(letters):
