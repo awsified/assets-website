@@ -51,7 +51,6 @@ class AddRecord(FlaskForm):
     submit = SubmitField('Add/Update Record')
 
 class SearchForm(FlaskForm):
-    id_field = HiddenField()
     search_string = StringField('Enter a machine to search for:', [ InputRequired(), Regexp(r'^[A-Za-z0-9\s\-\']+$', message="Invalid machine name")])
 
     submit = SubmitField('Search')
@@ -112,23 +111,25 @@ def add_record():
 
 @app.route('/search_assets/', methods=['GET', 'POST'])
 def search_assets():
-    form3 = SearchForm()
-    return render_template('search_assets.html', form3=form3)
+    #form3 = SearchForm()
+    searchbar = request.form.get('searchbar',0)
+    assets = Asset.query.filter(Asset.machine.contains(searchbar)).all()
+    return render_template('search_assets.html', assets=assets)#, form3=form3)
 
 @app.route('/search_results/',methods=['GET', 'POST'])
 def search_results(search_results):
 
-    assets = Asset.query.filter(Asset.machine.contains(search_string)).all()
-    return render_template('search_results.html', assets=assets)
+    # assets = Asset.query.filter(Asset.machine.contains(search_string)).all()
+    # return render_template('search_results.html', assets=assets)
 
-    # # User.query.filter(User.name.like("%John Smith%")).all()
-    # assets = Asset.query.filter(Asset.machine.contains('ECCICFM4701')).all()
-    # id = request.form['id']
-    # choice = request.form['choice']
-    # form1 = AddRecord()
-    # form2 = DeleteForm()
-    # form3 = SearchForm()
-    # return render_template('search_results.html', assets=assets, form1=form1, form2=form2, choice=choice)
+    # User.query.filter(User.name.like("%John Smith%")).all()
+    assets = Asset.query.filter(Asset.machine.contains('ECCICFM4701')).all()
+    id = request.form['id']
+    choice = request.form['choice']
+    form1 = AddRecord()
+    form2 = DeleteForm()
+    form3 = SearchForm()
+    return render_template('search_results.html', assets=assets, form1=form1, form2=form2, choice=choice)
 
 
 @app.route('/select_record/<letters>')
