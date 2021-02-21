@@ -1,13 +1,17 @@
-import os
-from forms import SearchForm, DeleteForm, AddRecord
+import models
 from flask import Flask, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 
+
+# from flask_wtf import FlaskForm
+# from wtforms import SubmitField, SelectField, RadioField, HiddenField, StringField
+# from wtforms.validators import InputRequired, Length, Regexp, NumberRange
+
 app = Flask(__name__)
 
 # Flask-WTF requires an enryption key - the string can be anything
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = 'MLXH243GssUWwKdTWS7FDhdwYF56wPj8'
 
 Bootstrap(app)
 
@@ -35,10 +39,41 @@ class Asset(db.Model):
         self.mac = mac
         self.location = location
 
+
+
 @app.route('/')
 def index():
     machines = Asset.query.with_entities(Asset.machine).distinct()
     return render_template('index.html', machines=machines)
+
+@app.route('/testform')
+def test():
+    form1 = SearchForm()
+        if form1.validate_on_submit():
+        machine = request.form['machine']
+        employee = request.form['employee']
+        tag = request.form['tag']
+        serial = request.form['serial']
+        mac = request.form['mac']
+        location = request.form['location']
+        # the data to be inserted into Asset model - the table, assets
+        record = Asset(machine, employee, tag, serial, mac, location)
+        # Flask-SQLAlchemy magic adds record to database
+        db.session.add(record)
+        db.session.commit()
+        # create a message to send to the template
+        message = f"The data for asset {machine} has been submitted."
+        return render_template('add_record.html', message=message)
+    else:
+        # show validaton errors
+        # see https://pythonprogramming.net/flash-flask-tutorial/
+        for field, errors in form1.errors.items():
+            for error in errors:
+                flash("Error in {}: {}".format(
+                    getattr(form1, field).label.text,
+                    error
+                ), 'error')
+        return render_template('add_record.html', form1=form1)
 
 @app.route('/inventory/<machine>')
 def inventory(machine):
@@ -155,3 +190,8 @@ def edit_result():
                     error
                 ), 'error')
         return render_template('edit_or_delete.html', form1=form1, asset=asset, choice='edit')
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

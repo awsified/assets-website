@@ -28,6 +28,22 @@ Search Assets
 
 			<p class="ml-4"><a href="{{ url_for('index') }}">Return to the asset index.</a></p>
 
+			<!-- show flash - based on WTForms validators
+				 see https://pythonprogramming.net/flash-flask-tutorial/
+				 get_flashed_messages() exists here because of flash()
+				 in the route function
+				 -->
+			{% with errors = get_flashed_messages() %}
+				{% if errors %}
+					{% for err in errors %}
+						<div class="alert alert-danger alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+						{{ err }}
+						</div>
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+			<!-- end of flash -->
 			<form action="http://127.0.0.1:5000/search_assets/" method="POST">
 				Search: : <input type="text" name="searchbar"><br>
 				<input type="submit" value="submit">
@@ -47,7 +63,7 @@ Search Assets
 				<th>Location</th>
 			</tr>
 
-			<!-- here is a for-loop to give us all the assets -->
+			<!-- here is a for-loop to give us all the socks -->
 			
 			  {% for asset in assets %}
 			  <tr>
