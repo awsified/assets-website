@@ -1,4 +1,6 @@
 from .assets import app
+from flask import render_template
+from .assets import app, Asset
 
 @app.route('/')
 def index():

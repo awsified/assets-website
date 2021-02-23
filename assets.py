@@ -1,5 +1,4 @@
 import os
-from .forms import SearchForm, DeleteForm, AddRecord
 from flask import Flask, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
