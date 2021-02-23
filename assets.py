@@ -1,11 +1,12 @@
 import os
-from .routes import *
 from .forms import SearchForm, DeleteForm, AddRecord
 from flask import Flask, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
+
+from .assets import app
 
 # Flask-WTF requires an enryption key - the string can be anything
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
@@ -35,3 +36,5 @@ class Asset(db.Model):
         self.serial = serial
         self.mac = mac
         self.location = location
+
+from .routes import *

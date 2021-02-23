@@ -1,4 +1,4 @@
-from flask import current_app
+from .assets import app
 
 @app.route('/')
 def index():
