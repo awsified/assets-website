@@ -1,6 +1,20 @@
+from os import getenv
 from flask import render_template, request, flash
-from .assets import app, Asset, db
+from .assets import app, Asset
 from .forms import AddRecord, DeleteForm
+from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
+
+app.config['SECRET_KEY'] = getenv('SECRET_KEY')
+
+Bootstrap(app)
+
+db_name = 'assets.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
+db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
