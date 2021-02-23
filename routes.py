@@ -1,4 +1,7 @@
-from .assets import app
+from flask import request, render_template, flash
+
+from .assets import app, Asset
+from .forms import *
 
 @app.route('/')
 def index():
