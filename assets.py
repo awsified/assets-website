@@ -6,8 +6,6 @@ load_dotenv()
 
 app = Flask(__name__)
 
-#from .assets import app
-
 db_name = 'assets.db'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
