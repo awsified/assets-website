@@ -1,5 +1,13 @@
-{% extends 'layout.html' %}
+{% extends 'bootstrap/base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block styles %}
+{{ super() }}
+	<style>
+		body { background: #e8f1f9; }
+	</style>
+{% endblock %}
 
 
 {% block title %}
@@ -30,6 +38,8 @@ Add an Asset
 			<!-- the form is displayed when template opens via GET not POST -->
 
 			<p class="lead alert alert-primary">Add a new asset to the inventory.</p>
+
+			<p class="ml-4"><a href="{{ url_for('index') }}">Return to the asset index.</a></p>
 
 			<!-- show flash - based on WTForms validators
 				 see https://pythonprogramming.net/flash-flask-tutorial/

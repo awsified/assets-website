@@ -9,17 +9,17 @@ app.config['SECRET_KEY'] = getenv('SECRET_KEY')
 
 Bootstrap(app)
 
-# db_name = 'assets.db'
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
-# db = SQLAlchemy(app)
-
 @app.route('/')
 def index():
     machines = Asset.query.with_entities(Asset.machine).distinct()
     return render_template('index.html', machines=machines)
+
+
+@app.route('/search_records', methods=['GET', 'POST'])
+def search_records():
+    searchterm = request.args.get('search')
+    assets = Asset.query.filter(Asset.machine.contains(searchterm)).all()
+    return render_template('search_records.html', assets=assets)
 
 @app.route('/inventory/<machine>')
 def inventory(machine):
@@ -62,13 +62,6 @@ def add_record():
                 ), 'error')
         return render_template('add_record.html', form1=form1)
 
-
-@app.route('/search_assets/', methods=['GET', 'POST'])
-def search_assets():
-    #form3 = SearchForm()
-    searchbar = request.form.get('searchbar',0)
-    assets = Asset.query.filter(Asset.machine.contains(searchbar)).all()
-    return render_template('search_assets.html', assets=assets)
 
 @app.route('/select_record/<letters>')
 def select_record(letters):

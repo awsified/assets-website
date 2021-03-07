@@ -1,18 +1,6 @@
-{% extends 'bootstrap/base.html' %}
-
-{% block styles %}
-{{ super() }}
-	<style>
-		body { background: #e8f1f9; }
-	</style>
-{% endblock %}
-
-{% block title %}
-Widgets Inc
-{% endblock %}
+{% extends 'layout.html' %}
 
 {% block content %}
-
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
@@ -22,9 +10,6 @@ Widgets Inc
       <p class="lead">Index of all Widget Inc. Assets</p>
 
       <p>For more details click asset:</p>
-      <p>You can <a href="{{ url_for('add_record') }}">add a new asset</a>.</p>
-      <p>You can <a href="{{ url_for('select_record', letters='AF') }}">sort employees alphabetically</a>.</p>
-      <p>You can <a href="{{ url_for('search_assets') }}">search current assets</a>.</p>
       <ul style="column-count: 4">
           {% for s in machines %}
           <li display: inline><a href="{{ url_for( 'inventory', machine=s.machine ) }}">{{ s.machine }}</a></li>
@@ -34,5 +19,4 @@ Widgets Inc
     </div>
   </div>
 </div>
-
 {% endblock %}
