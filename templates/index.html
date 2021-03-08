@@ -4,17 +4,36 @@
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
-
-      <h1 class="pt-5 pb-2">Widgets Inc.</h1>
+      
+      <img src="/static/titledwidget.jpg" width="200" height="100">
 
       <p class="lead">Index of all Widget Inc. Assets</p>
 
       <p>For more details click asset:</p>
-      <ul style="column-count: 4">
-          {% for s in machines %}
-          <li display: inline><a href="{{ url_for( 'inventory', machine=s.machine ) }}">{{ s.machine }}</a></li>
+      
+      <table class="table">
+        <tr>
+          <th>Machine</th>
+          <th>Employee</th>
+          <th>IIA Tag</th>
+          <th>Serial</th>
+          <th>MAC</th>
+          <th>Location</th>
+        </tr>
+    
+        <!-- here is a for-loop to give us all the assets -->
+        
+          {% for asset in assets %}
+          <tr>
+            <td><a href="{{ url_for( 'inventory', machine=asset.machine ) }}">{{ asset.machine }}</a></td>
+            <td>{{ asset.employee }}</td>
+            <td>{{ asset.tag }}</td>
+            <td>{{ asset.serial }}</td>
+            <td>{{ asset.mac }}</td>
+            <td>{{ asset.location }}</td>
+          </tr>
           {% endfor %}
-      </ul>
+        </table>
 
     </div>
   </div>

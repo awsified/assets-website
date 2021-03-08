@@ -11,8 +11,8 @@ Bootstrap(app)
 
 @app.route('/')
 def index():
-    machines = Asset.query.with_entities(Asset.machine).distinct()
-    return render_template('index.html', machines=machines)
+    assets = Asset.query.all()
+    return render_template('index.html', assets=assets)
 
 
 @app.route('/search_records', methods=['GET', 'POST'])
