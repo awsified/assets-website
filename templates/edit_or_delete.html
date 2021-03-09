@@ -76,7 +76,7 @@
 
 		<!-- ----- start edit asset content ----- -->
 
-		<p class="lead alert alert-success">Edit the selected asset below.</p>
+		<p class="lead alert alert-primary">Edit the selected asset below.</p>
 
 		<!-- links -->
 		<p><a href="{{ url_for('index') }}">Return to the index.</a></p>
@@ -109,7 +109,7 @@
 			{{ wtf.form_field(form1.serial, value=asset.serial) }}
             {{ wtf.form_field(form1.mac, value=asset.mac) }}
 			{{ wtf.form_field(form1.location, value=asset.location) }}
-			{{ wtf.form_field(form1.submit, button_map={'submit':'success'}) }}
+			{{ wtf.form_field(form1.submit, button_map={'submit':'primary'}) }}
 		</form>
 
 		<script>
