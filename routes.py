@@ -9,6 +9,11 @@ app.config['SECRET_KEY'] = getenv('SECRET_KEY')
 
 Bootstrap(app)
 
+@app.context_processor
+def inject_asset_count():
+    asset_count = Asset.query.count()
+    return dict(asset_count=asset_count)
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
