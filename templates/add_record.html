@@ -11,8 +11,6 @@ Add an Asset
 
 <div class="container">
 	<div class="row pb-5">
-		<div>
-			<h1 class="pt-5 pb-2" style="text-align:center">Add a New Asset</h1>
 
 			{% if message %}
 
@@ -28,7 +26,7 @@ Add an Asset
 
 			<!-- the form is displayed when template opens via GET not POST -->
 
-			<p class="lead alert alert-primary">Add a new asset to the inventory.</p>
+			
 
 			<!-- show flash - based on WTForms validators
 				 see https://pythonprogramming.net/flash-flask-tutorial/
@@ -48,8 +46,9 @@ Add an Asset
 			<!-- end of flash -->
 
 			<!-- the form, thanks to WTForms -->
-		    {{ wtf.quick_form(form1, button_map={'submit': 'primary'}) }}
-
+			<div>
+		    {{ wtf.quick_form(form1, button_map={'submit': 'outline-primary'}) }}
+			</div>
 		{% endif %}
 
 		</div>

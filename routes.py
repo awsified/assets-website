@@ -24,7 +24,6 @@ def index():
 
 @app.route('/delete/<machine>', methods=['GET'])
 def delete_asset(machine):
-    #form1 = AddRecord()
     form2 = DeleteForm()
     asset = Asset.query.filter(Asset.machine == machine).first()
     choice = 'delete'
@@ -33,7 +32,6 @@ def delete_asset(machine):
 @app.route('/edit/<machine>', methods=['GET'])
 def edit_asset(machine):
     form1 = AddRecord()
-    #form2 = DeleteForm()
     asset = Asset.query.filter(Asset.machine == machine).first()
     choice = 'edit'
     return render_template('edit_or_delete.html', asset=asset,form1=form1, choice=choice)
