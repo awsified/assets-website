@@ -1,7 +1,6 @@
 {% extends 'layout.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-
 {% block title %}
 	{% if choice == 'delete' %}
 		Delete an Asset
@@ -10,25 +9,18 @@
 	{% endif %}
 {% endblock %}
 
-
 {% block content %}
 
 <div class="container">
   <div class="row pb-5">
-
-	  <!-- ----- THIS TEMPLATE HAS TWO FORMS ----- -->
-	  <!-- but only one will be visible, depending on how the template
-  		   was opened -->
-
-	  <!-- ----- start delete asset content ----- -->
+	  <!-- ----- THIS TEMPLATE HAS TWO FORMS ------->
+	  <!-- but only one will be visible, depending on how the template was opened -->
+	  <!-- ----- start delete asset content ------->
 
 	  {% if choice == 'delete' %}
-
 	      <p class="lead alert alert-danger" style="text-align: center">Are you sure you want to delete this asset?</p>
-
 		  <!-- links -->
 		  <p class="ml-4">No. <a href="{{ url_for('index') }}">Return to the index.</a></p>
-
 		<!-- table showing the selected asset -->
 		<table class="table">
 			<tr>
@@ -39,7 +31,6 @@
 				<th>MAC</th>
 				<th>Location</th>
 			</tr>
-
 			<!-- just one asset here -->
 			<tr>
 				<td>{{ asset.machine }}</td>
@@ -52,7 +43,6 @@
 
 		</table>
 
-
 		<!-- start form for deleting record - not quickform but still WTForms -->
   		<form action="{{ url_for('delete_result') }}" method="POST" id="delete">
 			{{ form2.csrf_token }}
@@ -62,10 +52,8 @@
 		</form>
 		<!-- end form -->
 
-
 		<!-- ----- end delete asset content ----- -->
 		{% else %}
-
 		<!-- ----- start edit asset content ----- -->
 
 		<!-- links -->
@@ -113,7 +101,5 @@
 
 		</div>
 	</div>
-</div>
-
-
+	
 {% endblock %}

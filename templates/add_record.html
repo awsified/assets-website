@@ -1,33 +1,23 @@
 {% extends 'layout.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-
 {% block title %}
 Add an Asset
 {% endblock %}
-
 
 {% block content %}
 
 <div class="container">
 	<div class="row pb-5">
-
 			{% if message %}
-
 				<!-- the form was submitted and message exists -->
 				<p class="lead"><strong>{{ message }}</strong></p>
-
 				<!-- links -->
 				<p><a href="{{ url_for('add_record') }}">Submit another asset.</a></p>
 
 				<p><a href="{{ url_for('index') }}">Return to the asset index.</a></p>
-
 			{% else %}
-
 			<!-- the form is displayed when template opens via GET not POST -->
-
-			
-
 			<!-- show flash - based on WTForms validators
 				 see https://pythonprogramming.net/flash-flask-tutorial/
 				 get_flashed_messages() exists here because of flash()
@@ -44,15 +34,10 @@ Add an Asset
 				{% endif %}
 			{% endwith %}
 			<!-- end of flash -->
-
 			<!-- the form, thanks to WTForms -->
-			<div>
 		    {{ wtf.quick_form(form1, button_map={'submit': 'outline-primary'}) }}
-			</div>
 		{% endif %}
-
 		</div>
 	</div>
-</div>
 
 {% endblock %}
