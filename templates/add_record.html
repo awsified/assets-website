@@ -11,21 +11,20 @@ Add an Asset
 
 <div class="container">
 	<div class="row pb-5">
-		<div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
+		<div>
+			<h1 class="pt-5 pb-2" style="text-align:center">Add a New Asset</h1>
 
-		<h1 class="pt-5 pb-2">Add a New Asset</h1>
+			{% if message %}
 
-		{% if message %}
+				<!-- the form was submitted and message exists -->
+				<p class="lead"><strong>{{ message }}</strong></p>
 
-			<!-- the form was submitted and message exists -->
-			<p class="lead"><strong>{{ message }}</strong></p>
+				<!-- links -->
+				<p><a href="{{ url_for('add_record') }}">Submit another asset.</a></p>
 
-			<!-- links -->
-			<p><a href="{{ url_for('add_record') }}">Submit another asset.</a></p>
+				<p><a href="{{ url_for('index') }}">Return to the asset index.</a></p>
 
-			<p><a href="{{ url_for('index') }}">Return to the asset index.</a></p>
-
-		{% else %}
+			{% else %}
 
 			<!-- the form is displayed when template opens via GET not POST -->
 
@@ -40,7 +39,7 @@ Add an Asset
 				{% if errors %}
 					{% for err in errors %}
 						<div class="alert alert-danger alert-dismissible" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
 						{{ err }}
 						</div>
 					{% endfor %}

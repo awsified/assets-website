@@ -1,15 +1,18 @@
 {% extends 'layout.html' %}
 
+{% block title %}
+Index
+{% endblock %}
+
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="col-md-10 col-lg-8 mx-lg-auto mx-md-auto">
-      
-      <img src="/static/titledwidget.jpg" width="200" height="75">
+    <div style="text-align: center">
+        <img src="/static/titledwidget.jpg" width="200" height="75">
 
-      <p class="lead">Index of all Widget Inc. Assets</p>
+        <p class="lead">Index of all Widget Inc. Assets</p>
 
-      <p>For more details click asset:</p>
+        <p>For more details click asset:</p>
       
       <table class="table">
         <tr>
@@ -31,6 +34,12 @@
             <td>{{ asset.serial }}</td>
             <td>{{ asset.mac }}</td>
             <td>{{ asset.location }}</td>
+            <td>
+            <form method ="post" action="/">
+              <a class="btn btn-outline-primary btn-sm" href="/edit/{{ asset.machine }}" role="button">Edit</a>
+              <a class="btn btn-outline-danger btn-sm" href="/delete/{{ asset.machine }}" role="button">Delete</a>
+            </form> 
+            </td>
           </tr>
           {% endfor %}
         </table>

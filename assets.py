@@ -30,4 +30,4 @@ class Asset(db.Model):
         self.mac = mac
         self.location = location
 
-from .routes import index, inventory, add_record,select_record,edit_or_delete,delete_result,search_records
+from .routes import index, inventory, add_record,select_record,edit_or_delete,delete_result,search_records,delete_asset,edit_asset

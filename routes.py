@@ -9,10 +9,34 @@ app.config['SECRET_KEY'] = getenv('SECRET_KEY')
 
 Bootstrap(app)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    assets = Asset.query.all()
-    return render_template('index.html', assets=assets)
+    if request.method == 'POST':
+        if request.form['edit_or_delete'] == 'joe':
+            return render_template('error.html')
+        elif request.form['edit_or_delete'] == 'kres':
+            return render_template('layout.html')
+        else:
+            return render_template('error.html')
+    elif request.method == 'GET':
+        assets = Asset.query.all()
+        return render_template('index.html', assets=assets)
+
+@app.route('/delete/<machine>', methods=['GET'])
+def delete_asset(machine):
+    #form1 = AddRecord()
+    form2 = DeleteForm()
+    asset = Asset.query.filter(Asset.machine == machine).first()
+    choice = 'delete'
+    return render_template('edit_or_delete.html', asset=asset,form2=form2, choice=choice)
+
+@app.route('/edit/<machine>', methods=['GET'])
+def edit_asset(machine):
+    form1 = AddRecord()
+    #form2 = DeleteForm()
+    asset = Asset.query.filter(Asset.machine == machine).first()
+    choice = 'edit'
+    return render_template('edit_or_delete.html', asset=asset,form1=form1, choice=choice)
 
 
 @app.route('/search_records', methods=['GET', 'POST'])

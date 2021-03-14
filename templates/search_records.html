@@ -7,7 +7,6 @@
 
   <table class="table">
     <tr>
-      <th></th>
       <th>Machine</th>
       <th>Employee</th>
       <th>IIA Tag</th>
@@ -20,35 +19,21 @@
     
       {% for asset in assets %}
       <tr>
-        <td class="center-align"><input type="radio" name="id" value="{{ asset.machine }}" required></td>
         <td>{{ asset.machine }}</td>
         <td>{{ asset.employee }}</td>
         <td>{{ asset.tag }}</td>
         <td>{{ asset.serial }}</td>
         <td>{{ asset.mac }}</td>
         <td>{{ asset.location }}</td>
+        <td>
+          <form method ="post" action="/">
+            <a class="btn btn-outline-primary btn-sm" href="/edit/{{ asset.machine }}" role="button">Edit</a>
+            <a class="btn btn-outline-danger btn-sm" href="/delete/{{ asset.machine }}" role="button">Delete</a>
+          </form> 
+          </td>
       </tr>
       {% endfor %}
     </table>
-
-    <div class="form-group lead alert alert-primary">
-      <p>What do you want to do with the selected record?</p>
-
-      <div class="form-check form-check-inline-sm">
-        <label class="form-check-label"><input class="form-check-input" type="radio" name="choice" value="delete" required> Delete it</label>
-      </div>
-      <div class="form-check form-check-inline-sm">
-        <label class="form-check-label"><input class="form-check-input" type="radio" name="choice" value="edit" required> Edit it</label>
-      </div>
-    </div><!-- end form-group -->
-
-    <div class="form-group">
-      <input class="btn btn-primary" type="submit" value="Submit Choice">
-    </div>
-
     </form>
-    </div>
-  </div>
-</div>
 
 {% endblock %}
