@@ -5,7 +5,7 @@ from .forms import AddRecord, DeleteForm
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 
-app.config['SECRET_KEY'] = getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = 'FDN58934RHFY3274/.,F,FJE'
 
 Bootstrap(app)
 
